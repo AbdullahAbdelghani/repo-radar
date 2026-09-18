@@ -16,13 +16,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useSearchRepositories } from "../common/hooks/useSearchRepositories";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  addTrackedRepository,
+  removeTrackedRepository,
+} from "../store/trackedRepositoriesSlice";
 
 function HomeScreen() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [trackedRepositories, setTrackedRepositories] = useState<Set<string>>(
-    new Set(),
+  const dispatch = useAppDispatch();
+  const trackedRepositories = useAppSelector(
+    (state) => state.trackedRepositories.repositories,
   );
   const {
     data: searchResults,
@@ -42,18 +48,16 @@ function HomeScreen() {
 
   const hasSearch = search.trim().length > 0;
 
-  const toggleTracked = (repositoryKey: string) => {
-    setTrackedRepositories((current) => {
-      const next = new Set(current);
+  const toggleTracked = (owner: string, repo: string) => {
+    const isTracked = trackedRepositories.some(
+      (repository) => repository.owner === owner && repository.repo === repo,
+    );
 
-      if (next.has(repositoryKey)) {
-        next.delete(repositoryKey);
-      } else {
-        next.add(repositoryKey);
-      }
-
-      return next;
-    });
+    dispatch(
+      isTracked
+        ? removeTrackedRepository({ owner, repo })
+        : addTrackedRepository({ owner, repo }),
+    );
   };
 
   return (
@@ -139,11 +143,17 @@ function HomeScreen() {
                   </TableHead>
                   <TableBody>
                     {searchResults.items.map((repository) => {
-                      const repositoryKey = `${repository.owner.login}/${repository.name}`;
-                      const isTracked = trackedRepositories.has(repositoryKey);
+                      const isTracked = trackedRepositories.some(
+                        (trackedRepository) =>
+                          trackedRepository.owner === repository.owner.login &&
+                          trackedRepository.repo === repository.name,
+                      );
 
                       return (
-                        <TableRow key={repositoryKey} hover>
+                        <TableRow
+                          key={`${repository.owner.login}/${repository.name}`}
+                          hover
+                        >
                           <TableCell sx={{ fontWeight: 700 }}>
                             {repository.name}
                           </TableCell>
@@ -166,7 +176,12 @@ function HomeScreen() {
                               component="button"
                               type="button"
                               aria-pressed={isTracked}
-                              onClick={() => toggleTracked(repositoryKey)}
+                              onClick={() =>
+                                toggleTracked(
+                                  repository.owner.login,
+                                  repository.name,
+                                )
+                              }
                               sx={{
                                 border: 0,
                                 borderRadius: 1,
