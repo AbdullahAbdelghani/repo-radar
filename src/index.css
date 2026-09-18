@@ -17,6 +17,32 @@ body {
   min-height: 100vh;
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 16px;
+  min-height: 96px;
+  box-sizing: border-box;
+  padding: 20px clamp(24px, 8vw, 128px);
+  background: #ffffff;
+  border-bottom: 1px solid #d9e4e8;
+}
+
+.nav-button {
+  border-bottom: 3px solid transparent;
+  padding: 12px 4px 9px;
+  color: #53636d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-button:hover,
+.nav-button.active {
+  border-bottom-color: #147d92;
+  color: #147d92;
+}
+
 h1 {
   max-width: 720px;
   margin: 0;
@@ -71,4 +97,14 @@ button {
 .button-link:hover,
 button:hover {
   background: #0e6173;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 112px;
+    gap: 4px;
+  }
 }
