@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export type TrackedRepository = {
-  owner: string;
-  repo: string;
+  repositoryOwner: string;
+  repositoryName: string;
 };
 
 type TrackedRepositoriesState = {
@@ -20,8 +20,8 @@ const trackedRepositoriesSlice = createSlice({
     addTrackedRepository: (state, action: PayloadAction<TrackedRepository>) => {
       const alreadyTracked = state.repositories.some(
         (repository) =>
-          repository.owner === action.payload.owner &&
-          repository.repo === action.payload.repo,
+          repository.repositoryOwner === action.payload.repositoryOwner &&
+          repository.repositoryName === action.payload.repositoryName,
       );
 
       if (!alreadyTracked) {
@@ -34,8 +34,8 @@ const trackedRepositoriesSlice = createSlice({
     ) => {
       state.repositories = state.repositories.filter(
         (repository) =>
-          repository.owner !== action.payload.owner ||
-          repository.repo !== action.payload.repo,
+          repository.repositoryOwner !== action.payload.repositoryOwner ||
+          repository.repositoryName !== action.payload.repositoryName,
       );
     },
   },

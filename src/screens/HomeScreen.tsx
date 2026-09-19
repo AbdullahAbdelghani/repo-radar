@@ -48,15 +48,17 @@ function HomeScreen() {
 
   const hasSearch = search.trim().length > 0;
 
-  const toggleTracked = (owner: string, repo: string) => {
+  const toggleTracked = (repositoryOwner: string, repositoryName: string) => {
     const isTracked = trackedRepositories.some(
-      (repository) => repository.owner === owner && repository.repo === repo,
+      (repository) =>
+        repository.repositoryOwner === repositoryOwner &&
+        repository.repositoryName === repositoryName,
     );
 
     dispatch(
       isTracked
-        ? removeTrackedRepository({ owner, repo })
-        : addTrackedRepository({ owner, repo }),
+        ? removeTrackedRepository({ repositoryOwner, repositoryName })
+        : addTrackedRepository({ repositoryOwner, repositoryName }),
     );
   };
 
@@ -145,8 +147,9 @@ function HomeScreen() {
                     {searchResults.items.map((repository) => {
                       const isTracked = trackedRepositories.some(
                         (trackedRepository) =>
-                          trackedRepository.owner === repository.owner.login &&
-                          trackedRepository.repo === repository.name,
+                          trackedRepository.repositoryOwner ===
+                            repository.owner.login &&
+                          trackedRepository.repositoryName === repository.name,
                       );
 
                       return (

@@ -20,13 +20,22 @@ const loadTrackedRepositories = (): TrackedRepository[] => {
       return [];
     }
 
-    return parsedRepositories.filter(
-      (repository): repository is TrackedRepository =>
-        typeof repository === "object" &&
-        repository !== null &&
-        typeof (repository as TrackedRepository).owner === "string" &&
-        typeof (repository as TrackedRepository).repo === "string",
-    );
+    return parsedRepositories.flatMap((repository): TrackedRepository[] => {
+      if (typeof repository !== "object" || repository === null) {
+        return [];
+      }
+
+      const storedRepository = repository as {
+        repositoryOwner?: unknown;
+        repositoryName?: unknown;
+      };
+      const { repositoryOwner, repositoryName } = storedRepository;
+
+      return typeof repositoryOwner === "string" &&
+        typeof repositoryName === "string"
+        ? [{ repositoryOwner, repositoryName }]
+        : [];
+    });
   } catch {
     return [];
   }

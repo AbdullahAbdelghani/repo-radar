@@ -80,6 +80,52 @@ h1 {
   font-size: 1.1rem;
 }
 
+.tracked-screen {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.tracked-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.tracked-heading .description {
+  margin-top: 20px;
+}
+
+.tracked-screen > .MuiTabs-root,
+.tracked-screen > .MuiPaper-root {
+  width: 100%;
+  max-width: 1280px;
+}
+
+.tracked-empty {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.chart-panel {
+  padding: 24px;
+}
+
+.repo-cell-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .button-link,
 button {
   display: inline-block;
@@ -106,5 +152,10 @@ button:hover {
     justify-content: center;
     min-height: 112px;
     gap: 4px;
+  }
+
+  .tracked-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

@@ -43,12 +43,15 @@ export const searchRepositories = async ({
 export const getRepositoryDetails = async ({
   owner,
   repo,
+  signal,
 }: {
   owner: string;
   repo: string;
+  signal?: AbortSignal;
 }) => {
-  const response = await axios.get(
+  const response = await axios.get<Repository>(
     `https://api.github.com/repos/${owner}/${repo}`,
+    { signal },
   );
   return response.data;
 };
