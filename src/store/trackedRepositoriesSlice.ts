@@ -17,7 +17,10 @@ const trackedRepositoriesSlice = createSlice({
   name: "trackedRepositories",
   initialState,
   reducers: {
-    addTrackedRepository: (state, action: PayloadAction<RepositoryIdentifiers>) => {
+    addTrackedRepository: (
+      state,
+      action: PayloadAction<RepositoryIdentifiers>,
+    ) => {
       const alreadyTracked = state.repositories.some(
         (repository) =>
           repository.repositoryOwner === action.payload.repositoryOwner &&
