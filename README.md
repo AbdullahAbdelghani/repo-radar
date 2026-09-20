@@ -1,32 +1,50 @@
-# React + TypeScript + Vite
+# Repo Radar
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Repo Radar is a React application for searching GitHub repositories, tracking selected repositories, viewing repository details, and comparing tracked repositories by stars.
 
-Currently, two official plugins are available:
+Live release: [repo-radar-sable.vercel.app](https://repo-radar-sable.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Setup
 
-## React Compiler
+Requirements:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20 or newer
+- npm
 
-## Expanding the Oxlint configuration
+Install dependencies and start the development server:
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the local URL shown by Vite, usually `http://localhost:5173`.
+
+Useful commands:
+
+```bash
+npm run build    # Type-check and create the production bundle
+npm run lint     # Run Oxlint
+npm run preview  # Preview the production bundle locally
+```
+
+## Architecture
+
+- `src/screens/` contains the Home, tracked repositories, and repository details views.
+- `src/navigation/` defines React Router routes and the primary navigation.
+- `src/common/services/github.ts` contains the Axios calls to GitHub's REST API.
+- `src/common/hooks/` wraps GitHub requests with TanStack Query for caching, loading states, and refetching.
+- `src/store/` contains the Redux Toolkit store and tracked repository state.
+- Material UI provides the interface components, while Recharts provides the tracked-star comparison chart.
+- `vercel.json` rewrites all requests to `index.html`, allowing direct access and refreshes on client-side routes such as `/repositories/:owner/:repo`.
+
+## Technical Decisions
+
+- React Router handles client-side navigation without separate backend route handlers.
+- TanStack Query keeps repository data fresh and shares cached detail requests between screens.
+
+## Assumptions and Limitations
+
+- GitHub API requests are unauthenticated. The application is subject to GitHub's public API rate limits.
+- Search results depend on GitHub availability and API response limits.
+- Repository details use GitHub's `pushed_at` value as the displayed last commit date.
