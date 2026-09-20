@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  IconButton,
   Paper,
   Tab,
   Table,
@@ -24,81 +23,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  useTrackedRepositories,
-  useTrackedRepository,
-} from "../common/hooks/useTrackedRepositories";
+import { useTrackedRepositories } from "../common/hooks/useTrackedRepositories";
 import { useAppSelector } from "../store/hooks";
-
-function TrackedRepositoryRow({
-  repository,
-}: {
-  repository: { repositoryOwner: string; repositoryName: string };
-}) {
-  const {
-    data: repositoryDetails,
-    isPending: isRepositoryLoading,
-    isError: hasRepositoryError,
-    isFetching: isRepositoryRefreshing,
-    refetch: reloadRepository,
-  } = useTrackedRepository(repository);
-
-  return (
-    <TableRow
-      key={`${repository.repositoryOwner}/${repository.repositoryName}`}
-      hover
-    >
-      <TableCell sx={{ fontWeight: 700 }}>
-        {repository.repositoryName}
-      </TableCell>
-      <TableCell sx={{ maxWidth: 420 }}>
-        {isRepositoryLoading ? (
-          <Box className="repo-cell-status">
-            <CircularProgress size={18} />
-            <Typography variant="body2" color="text.secondary">
-              Loading repository...
-            </Typography>
-          </Box>
-        ) : hasRepositoryError ? (
-          <Box className="repo-cell-status">
-            <Typography color="error" variant="body2">
-              Unable to load repository
-            </Typography>
-            <Button
-              size="small"
-              onClick={() => reloadRepository()}
-              disabled={isRepositoryRefreshing}
-            >
-              Try again
-            </Button>
-          </Box>
-        ) : (
-          repositoryDetails?.description || "No description"
-        )}
-      </TableCell>
-      <TableCell>{repository.repositoryOwner}</TableCell>
-      <TableCell>
-        {repositoryDetails?.stargazers_count.toLocaleString() || "-"}
-      </TableCell>
-      <TableCell>
-        {repositoryDetails?.pushed_at
-          ? new Date(repositoryDetails.pushed_at).toLocaleDateString()
-          : "-"}
-      </TableCell>
-      <TableCell align="right">
-        <IconButton
-          aria-label={`Reload ${repository.repositoryOwner}/${repository.repositoryName}`}
-          title="Reload repository"
-          onClick={() => reloadRepository()}
-          disabled={isRepositoryRefreshing}
-          size="small"
-        >
-          {isRepositoryRefreshing ? <CircularProgress size={18} /> : "↻"}
-        </IconButton>
-      </TableCell>
-    </TableRow>
-  );
-}
+import TrackedRepositoryRow from "../components/TrackedRepositoryRow";
 
 function MyTrackedReposScreen() {
   const [activeTab, setActiveTab] = useState(0);
@@ -194,7 +121,7 @@ function MyTrackedReposScreen() {
                 {trackedRepositories.map((repository) => (
                   <TrackedRepositoryRow
                     key={`${repository.repositoryOwner}/${repository.repositoryName}`}
-                    repository={repository}
+                    repositoryIdentifiers={repository}
                   />
                 ))}
               </TableBody>

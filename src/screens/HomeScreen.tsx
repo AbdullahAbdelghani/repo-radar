@@ -15,6 +15,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useSearchRepositories } from "../common/hooks/useSearchRepositories";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
@@ -158,7 +159,12 @@ function HomeScreen() {
                           hover
                         >
                           <TableCell sx={{ fontWeight: 700 }}>
-                            {repository.name}
+                            <Link
+                              to={`/repositories/${encodeURIComponent(repository.owner.login)}/${encodeURIComponent(repository.name)}`}
+                              className="repository-link"
+                            >
+                              {repository.name}
+                            </Link>
                           </TableCell>
                           <TableCell sx={{ maxWidth: 420 }}>
                             {repository.description || "No description"}

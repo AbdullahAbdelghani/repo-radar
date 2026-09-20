@@ -126,6 +126,95 @@ h1 {
   gap: 8px;
 }
 
+.repository-link {
+  color: #147d92;
+  text-decoration: none;
+}
+
+.repository-link:hover {
+  text-decoration: underline;
+}
+
+.repository-details-screen {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.repository-details-heading,
+.repository-details-panel,
+.repository-details-screen > .MuiAlert-root {
+  width: 100%;
+  max-width: 900px;
+}
+
+.repository-details-heading h1 {
+  margin-top: 12px;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+}
+
+.repository-owner {
+  margin-top: 12px;
+  color: #53636d;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 32px;
+  color: #147d92;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.repository-details-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+}
+
+.repository-full-description {
+  color: #53636d;
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.repository-description {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.repository-description .MuiTypography-h5 {
+  font-size: 1.6rem;
+}
+
+.repository-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  padding-top: 12px;
+  border-top: 1px solid #d9e4e8;
+}
+
+.repository-stats .MuiTypography-overline {
+  color: #147d92;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.repository-stats .MuiTypography-h4 {
+  font-size: 2.6rem;
+}
+
+.repository-stats .MuiTypography-h6 {
+  font-size: 1.5rem;
+}
+
 .button-link,
 button {
   display: inline-block;

@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import trackedRepositoriesReducer from "./trackedRepositoriesSlice";
-import type { TrackedRepository } from "./trackedRepositoriesSlice";
+import type { RepositoryIdentifiers } from "./trackedRepositoriesSlice";
 
 const trackedRepositoriesStorageKey = "repo-radar-tracked-repositories";
 
-const loadTrackedRepositories = (): TrackedRepository[] => {
+const loadTrackedRepositories = (): RepositoryIdentifiers[] => {
   try {
     const storedRepositories = localStorage.getItem(
       trackedRepositoriesStorageKey,
@@ -20,7 +20,7 @@ const loadTrackedRepositories = (): TrackedRepository[] => {
       return [];
     }
 
-    return parsedRepositories.flatMap((repository): TrackedRepository[] => {
+    return parsedRepositories.flatMap((repository): RepositoryIdentifiers[] => {
       if (typeof repository !== "object" || repository === null) {
         return [];
       }
